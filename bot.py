@@ -1,5 +1,6 @@
 import os
 import threading
+import asyncio
 from flask import Flask
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, ContextTypes, filters
@@ -76,8 +77,7 @@ async def run_bot():
     await app.updater.start_polling()
     print("✅ Telegram polling started")
 
-    await threading.Event().wait()
-
+    await asyncio.Event().wait()
 
 def main():
     print("🚀 Starting Telegram bot...")
