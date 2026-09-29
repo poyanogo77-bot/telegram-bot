@@ -75,10 +75,17 @@ async def run_bot():
 
 
 def main():
+    print("🚀 Starting Telegram bot...")
+
     threading.Thread(target=run_web, daemon=True).start()
 
     import asyncio
-    asyncio.run(run_bot())
+
+    try:
+        asyncio.run(run_bot())
+    except Exception as e:
+        print("❌ TELEGRAM BOT ERROR:", repr(e))
+        raise
 
 
 if __name__ == "__main__":
