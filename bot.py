@@ -1,7 +1,8 @@
+import os
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, ContextTypes, filters
 
-TOKEN = "8901819842:AAGkS60nKbLRuWWD4WBzPBpAkUZaW97kxM4"
+TOKEN = os.getenv("BOT_TOKEN")
 
 FILES = {}
 
