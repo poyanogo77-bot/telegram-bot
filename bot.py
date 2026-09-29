@@ -84,7 +84,6 @@ def main():
 
     threading.Thread(target=run_web, daemon=True).start()
 
-    import asyncio
 
     try:
         asyncio.run(run_bot())
