@@ -67,11 +67,16 @@ async def run_bot():
         MessageHandler(filters.Document.ALL, receive_file)
     )
 
-    await app.initialize()
-    await app.start()
-    await app.updater.start_polling()
+await app.initialize()
+print("✅ Telegram initialized")
 
-    await threading.Event().wait()
+await app.start()
+print("✅ Telegram application started")
+
+await app.updater.start_polling()
+print("✅ Telegram polling started")
+
+await threading.Event().wait()
 
 
 def main():
