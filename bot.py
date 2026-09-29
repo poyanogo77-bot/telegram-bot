@@ -56,7 +56,6 @@ async def receive_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"کد فایل: {file_key}\n\n"
             f"لینک دریافت فایل:\n"
             f"https://t.me/{context.bot.username}?start={file_key}"
-        )
 
 
 async def run_bot():
@@ -67,16 +66,16 @@ async def run_bot():
         MessageHandler(filters.Document.ALL, receive_file)
     )
 
-await app.initialize()
-print("✅ Telegram initialized")
+    await app.initialize()
+    print("✅ Telegram initialized")
 
-await app.start()
-print("✅ Telegram application started")
+    await app.start()
+    print("✅ Telegram application started")
 
-await app.updater.start_polling()
-print("✅ Telegram polling started")
+    await app.updater.start_polling()
+    print("✅ Telegram polling started")
 
-await threading.Event().wait()
+    await threading.Event().wait()
 
 
 def main():
