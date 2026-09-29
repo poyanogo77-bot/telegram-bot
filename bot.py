@@ -1,10 +1,24 @@
 import os
+import threading
+from flask import Flask
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, ContextTypes, filters
 
 TOKEN = os.getenv("BOT_TOKEN")
 
 FILES = {}
+
+web_app = Flask(__name__)
+
+
+@web_app.route("/")
+def home():
+    return "Telegram Bot is running!"
+
+
+def run_web():
+    port = int(os.getenv("PORT", 10000))
+    web_app.run(host="0.0.0.0", port=port)
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -45,7 +59,7 @@ async def receive_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
 
-def main():
+async def run_bot():
     app = Application.builder().token(TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
@@ -53,8 +67,18 @@ def main():
         MessageHandler(filters.Document.ALL, receive_file)
     )
 
-    print("🤖 Bot is running...")
-    app.run_polling()
+    await app.initialize()
+    await app.start()
+    await app.updater.start_polling()
+
+    await threading.Event().wait()
+
+
+def main():
+    threading.Thread(target=run_web, daemon=True).start()
+
+    import asyncio
+    asyncio.run(run_bot())
 
 
 if __name__ == "__main__":
